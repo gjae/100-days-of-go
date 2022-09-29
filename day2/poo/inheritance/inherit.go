@@ -13,12 +13,12 @@ type Human struct {
 
 
 type Student struct {
-	Human // this mark Employee be inherited from Human struct
+	Human // this mark Employee as inherited from Human struct
 	university string
 }
 
 type Employee struct {
-	Human // this mark Employee be inherited from Human struct
+	Human // this mark Employee as inherited from Human struct
 	company string
 }
 
