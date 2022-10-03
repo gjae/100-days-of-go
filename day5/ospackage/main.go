@@ -5,7 +5,7 @@ import (
 	"os"
 )
 var version string = "0.0.1-beta"
-
+// Simple change
 func main() {
 	fmt.Println("Version ", version)
 	if path, err := os.Getwd(); err == nil {
