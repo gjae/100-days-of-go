@@ -20,6 +20,7 @@ func checkErr(err error) {
 * no require make call to Exec function and return rows and error values
 * rows is a cursor so that require Next call for walk throught results
 * rows.Scan assign columns to vars receiveds as pointers
+* 
 */
 func main() {
 	db, err := sql.Open("mysql", "root:root@/godb")
