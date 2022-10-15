@@ -1,0 +1,3 @@
+{"level":"error","error":"Test error log","time":1665786840}
+{"level":"info","message":"Test after file log","time":1665786840}
+{"level":"info","Message":"Mensaje info","PID":158810}
