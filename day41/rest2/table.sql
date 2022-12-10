@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS books (
+    id INTEGER PRIMARY KEY,
+    name VARCHAR(70),
+    isbn INTEGER,
+    author VARCHAR(64) NULL 
+)
