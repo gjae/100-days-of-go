@@ -60,6 +60,7 @@ func main() {
 	}
 
 	fmt.Println("Movie: ", queryResult)
+	fmt.Println("Movie name: ", queryResult.Name, " Budget: ", queryResult.BoxOffice.Budget)
 
 	err = client.Disconnect(context.TODO())
 	fmt.Println("Disconnected from MongoDB")
