@@ -20,8 +20,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -45,7 +45,7 @@ func init() {
 
 	// Reading all initial recipes from local
 	// json file
-	file, _ := ioutil.ReadFile("recipes.json")
+	file, _ := os.ReadFile("recipes.json")
 
 	_ = json.Unmarshal([]byte(file), &recipes)
 }
