@@ -11,7 +11,8 @@ type Node struct {
 type LinkedList struct {
 	Head *Node
 
-	// Point to last node in the list
+	// Pointer to last node in the list for avoid
+	// Travel all list for found last element
 	Tail *Node
 }
 
@@ -23,6 +24,7 @@ func (l *LinkedList) Last() *Node {
 	return l.Tail
 }
 
+// Add a new node at start of list
 func (linkedList *LinkedList) Prepend(property int) {
 	node := &Node{Property: property}
 
@@ -37,6 +39,7 @@ func (linkedList *LinkedList) Prepend(property int) {
 	linkedList.Head = node
 }
 
+// Apend a new node at last of the list
 func (l *LinkedList) Append(property int) {
 	node := &Node{Property: property}
 	lastNode := l.Last()
@@ -47,6 +50,7 @@ func (l *LinkedList) Append(property int) {
 	l.Tail = node
 }
 
+// Find an element by it property value
 func (l *LinkedList) Find(property int) *Node {
 	var node *Node
 	var nodeValue *Node
