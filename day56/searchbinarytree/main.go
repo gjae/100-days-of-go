@@ -217,7 +217,7 @@ func stringify(treeNode *TreeNode, level int) {
 		format += "---[ "
 		level++
 
-		// Print key in preorder traverser
+		// Print key inorder traversing
 		stringify(treeNode.LeftNode, level)
 		fmt.Printf(format+"%d\n", treeNode.key)
 		stringify(treeNode.RightNode, level)
