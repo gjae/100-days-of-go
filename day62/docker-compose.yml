@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  database:
+    image: "postgres:14.6-bullseye"
+    container_name: "go_gin_todo_pgsql"
+    environment:
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "go_gin_todo"
+  
+  pgadmin:
+    image: "dpage/pgadmin4"
+    container_name: "go_gin_todo_pgadmin"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "gogin@todo.com"
+      PGADMIN_DEFAULT_PASSWORD: "000+++gogintodo"
+
+    ports:
+      - 8001:80
+    links:
+      - "database"
