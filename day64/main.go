@@ -6,6 +6,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -34,27 +35,24 @@ func HomeHandler(c *gin.Context) {
 }
 
 func (client *Client) UsersCounterNotify() {
-	defer func() {
-		close(client.Message)
-		close(client.UserCounter)
-	}()
-
-	for {
+	exit := false
+	for !exit {
 		select {
 		case msg := <-client.Message:
-			if msg == "exit" {
+			if msg != "exit" {
+				log.Printf("Notificando: %s", msg)
+				client.Ctx.SSEvent("notification", msg)
+			} else {
 				client.Ctx.SSEvent("close", true)
-				break
+				exit = true
 			}
-			log.Printf("Notificando: %s", msg)
-			client.Ctx.SSEvent("notification", msg)
 		case counter := <-client.UserCounter:
 			log.Print("Enviando counter")
 			data, _ := json.Marshal(gin.H{"counter": counter})
 			client.Ctx.SSEvent("counter", string(data))
-
 		}
 	}
+
 }
 
 func DashboardCounterHandler(c *gin.Context) {
@@ -62,10 +60,15 @@ func DashboardCounterHandler(c *gin.Context) {
 
 	clients = append(clients, client)
 
+	log.Print("Nuevo usuario conectado")
+
 	c.Stream(func(w io.Writer) bool {
 
 		go client.UsersCounterNotify()
 
+		client.Ctx.SSEvent("client", client.ID)
+		data, _ := json.Marshal(gin.H{"counter": connecteds})
+		client.Ctx.SSEvent("counter", string(data))
 		return true
 	})
 }
@@ -79,6 +82,21 @@ func main() {
 
 	server.Router.GET("/dashboard/", HomeHandler)
 	server.Router.GET("/dashboard/counter", SeverSideEventMiddleware(), DashboardCounterHandler)
+	server.Router.POST("/dashboard/:user/disconnect", func(c *gin.Context) {
+		userId, _ := strconv.Atoi(c.Param("user"))
+		aux := make(ClientList, 0)
+		for _, ob := range clients {
+			if ob.ID == userId {
+				log.Printf("Desconectando ... %d", userId)
+				c.JSON(http.StatusOK, gin.H{"error": false})
+				log.Print("Ok ", clients)
+			} else {
+				aux = append(aux, ob)
+			}
+		}
+
+		clients = aux
+	})
 
 	server.Router.Run(":8000")
 }
@@ -111,7 +129,7 @@ func UserCounterMiddleware() gin.HandlerFunc {
 		log.Print("Notificando nuevo usuario")
 		for _, client := range clients {
 			log.Printf("Usuario ID: %d", client.ID)
-			// client.Message <- "Nuevo usuario conectado"
+			client.Message <- "Nuevo usuario conectado"
 			client.UserCounter <- connecteds
 		}
 

@@ -23,6 +23,9 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <input type="text" name="client_id" id="client_id">
+        </div>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
@@ -39,17 +42,26 @@
             console.log("User counters")
         })
 
-        counterEvent.addEventListener("notification", (raw) => {
-            console.log({raw})
-            // toastr.success('We do have the Kapua suite available.', 'Turtle Bay Resort', {timeOut: 5000})
-        })
-
         counterEvent.addEventListener("counter", (raw)=> {
             const data = JSON.parse(raw.data)
-            console.log({data}, raw, raw.data)
 
             counter.innerHTML = `${data.counter}`
         })
+
+        counterEvent.addEventListener("client", (raw) => {
+            document.getElementById("client_id").value = raw.data
+        })
+
+        counterEvent.addEventListener("close", (raw) => {
+            counterEvent.close()
+        })
+
+        window.onbeforeunload = function () {
+            let i = document.getElementById("client_id").value
+            fetch(`/dashboard/${i}/disconnect`, {method: "POST"})
+            return true;
+        };
+
     })()
 </script>
 </body>
