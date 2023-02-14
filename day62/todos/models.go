@@ -1,12 +1,14 @@
 package todos
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type Todo struct {
 	gorm.Model
-	Title   string
-	Text    string
-	BoardID uint
+	Title   string `json:"title"`
+	Text    string `json:"text"`
+	BoardID uint   `json:"board_id"`
 }
 
 func AutoMigrate(db *gorm.DB) {

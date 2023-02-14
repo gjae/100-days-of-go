@@ -19,8 +19,10 @@ func DefineAPI() *gin.Engine {
 	r := gin.Default()
 
 	boardsApi := r.Group("boards")
+	todosAPI := r.Group("todos")
 
 	boards.DefineRouter(boardsApi)
+	todos.DefineRouter(todosAPI)
 
 	return r
 
