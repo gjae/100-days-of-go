@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -51,6 +52,8 @@ func (client *Client) UsersCounterNotify() {
 			data, _ := json.Marshal(gin.H{"counter": counter})
 			client.Ctx.SSEvent("counter", string(data))
 		}
+		time.Sleep(time.Second * 10)
+
 	}
 
 }
@@ -65,10 +68,11 @@ func DashboardCounterHandler(c *gin.Context) {
 	c.Stream(func(w io.Writer) bool {
 
 		go client.UsersCounterNotify()
-
 		client.Ctx.SSEvent("client", client.ID)
+		time.Sleep(time.Second * 3)
 		data, _ := json.Marshal(gin.H{"counter": connecteds})
 		client.Ctx.SSEvent("counter", string(data))
+		time.Sleep(time.Second * 3)
 		return true
 	})
 }
