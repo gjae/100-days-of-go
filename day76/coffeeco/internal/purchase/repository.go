@@ -67,3 +67,10 @@ func toMongoPurchase(p Purchase) mongoPurchase {
 		cardToken:          p.CardToken,
 	}
 }
+
+func (mr *MongoRepository) Ping(ctx context.Context) error {
+	if _, err := mr.purchases.EstimatedDocumentCount(ctx); err != nil {
+		return fmt.Errorf("failed to ping DB: %w", err)
+	}
+	return nil
+}
