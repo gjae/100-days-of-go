@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Websocket chat with Go</title>
+</head>
+<body>
+    <h1>{{ .greeting }}</h1>
+
+    <ul id="messages">
+    </ul>
+
+    <input type="text" name="newMessage"  placeholder="Write a message and press enter" style="width: 70%;;" id="newMessage">
+<script>
+const ws = new WebSocket("ws://localhost:8000/ws")
+ws.onmessage = (ev) => {
+    console.log("New message received ", {ev})
+    const message = ev.data
+    const messageList = document.getElementById("messages")
+    const newMessageNode = document.createElement("li")
+    newMessageNode.innerHTML = message
+    messageList.appendChild(newMessageNode)
+}
+
+ws.onclose = (ev) => {
+    console.log("Closed")
+}
+
+ws.onopen = (ev) => {
+    ws.send("New user connected")
+}
+
+document.getElementById("newMessage").addEventListener("keyup", (e) => {
+    if (e.keyCode == 13) {
+        const input = document.getElementById("newMessage")
+        if (input.value != "/clear") {
+            ws.send(input.value)
+        } else if (input.value == "/clear") {
+            const messageList = document.getElementById("messages")
+            messageList.innerHTML = ""
+        }
+        input.value = ""
+    }
+})
+
+</script>
+</body>
+</html>
