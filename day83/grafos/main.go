@@ -118,17 +118,10 @@ func generarGrafos(combinaciones [][]Par) Grafos {
 }
 
 func main() {
-	v := 0
-	if len(os.Args) != 2 {
-		log.Fatal("Debe indicar un numero de vertices")
-	}
-
-	vaux, err := strconv.Atoi(os.Args[1])
+	v, err := strconv.Atoi(os.Args[1])
 	if err != nil {
 		log.Fatalf("%v ", err)
 	}
-
-	v = vaux
 
 	/**
 	* Primero se crea el conjunto de V elementos
