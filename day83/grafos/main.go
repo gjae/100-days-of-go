@@ -118,6 +118,10 @@ func generarGrafos(combinaciones [][]Par) Grafos {
 }
 
 func main() {
+	if len(os.Args) != 2 {
+		log.Fatal("Debe indicar un numero de vertices")
+	}
+
 	v, err := strconv.Atoi(os.Args[1])
 	if err != nil {
 		log.Fatalf("%v ", err)
