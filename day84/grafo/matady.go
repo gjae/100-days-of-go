@@ -84,8 +84,8 @@ func (g *Grafo) ChequearCamino(camino []int) bool {
 }
 
 func (g *Grafo) EsDirigido() bool {
-	for i := 0; i <= g.tam; i++ {
-		for j := 0; j <= g.tam; j++ {
+	for i := 0; i < g.tam; i++ {
+		for j := 0; j < g.tam; j++ {
 			// Si se encuentra discrepancia  entonces es dirigido
 			if g.mat[i][j] != g.mat[j][i] {
 				return true
@@ -94,4 +94,21 @@ func (g *Grafo) EsDirigido() bool {
 	}
 
 	return false
+}
+
+func (g *Grafo) AdyacentesDe(v int) []int {
+	var adyacentes []int
+	vertice := g.mat[v]
+
+	for key, v := range vertice {
+		if v == 1 {
+			adyacentes = append(adyacentes, key)
+		}
+	}
+
+	return adyacentes
+}
+
+func (g *Grafo) GetTam() int {
+	return g.tam
 }

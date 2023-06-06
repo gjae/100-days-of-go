@@ -3,6 +3,8 @@ package main
 import (
 	"bufio"
 	"fmt"
+	Anchura "gjae/matady/busquedas/anchura"
+	Profundidad "gjae/matady/busquedas/profundidad"
 	"gjae/matady/grafo"
 	"log"
 	"math/rand"
@@ -12,8 +14,15 @@ import (
 	"time"
 )
 
-func LeerArchivo() *bufio.Scanner {
-	archivo, err := os.Open("grafo.in")
+func LeerArchivo(ruta *string) *bufio.Scanner {
+	var archivo *os.File
+	var err error
+
+	if ruta == nil {
+		archivo, err = os.Open("grafo.in")
+	} else {
+		archivo, err = os.Open(*ruta)
+	}
 
 	if err != nil {
 		log.Fatal(err)
@@ -48,7 +57,13 @@ func BuscarCaminoAleatorio(vertices []int, grafo *grafo.Grafo) {
 }
 
 func main() {
-	scanner := LeerArchivo()
+	var ruta *string
+
+	if len(os.Args) > 1 {
+		ruta = &os.Args[1]
+	}
+
+	scanner := LeerArchivo(ruta)
 	scanner.Split(bufio.ScanLines)
 	scanner.Scan()
 	var vertices []int
@@ -74,4 +89,14 @@ func main() {
 	mat.PrintGrafo()
 	fmt.Println("---------")
 	BuscarCaminoAleatorio(vertices, mat)
+	bp := Profundidad.New(mat)
+	bp.Buscar(1)
+
+	fmt.Println("(Busqueda en profundidad) : Conteo para 1: ", bp.GetConteo())
+	fmt.Println("(Busqueda en profundidad) : Es conexo: ", bp.EsConexo())
+	fmt.Print("------------------\n")
+	ba := Anchura.New(mat)
+	ba.Buscar(1)
+	fmt.Println("(Busqueda en Anchura) : Es conexo: ", ba.EsConexo())
+
 }
