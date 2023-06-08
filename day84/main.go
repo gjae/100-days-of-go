@@ -86,17 +86,20 @@ func main() {
 		}
 	}
 
+	rand.Seed(time.Now().UnixNano())
+	randomOrigen := rand.Intn((numVertices - 1))
+
 	mat.PrintGrafo()
 	fmt.Println("---------")
 	BuscarCaminoAleatorio(vertices, mat)
 	bp := Profundidad.New(mat)
-	bp.Buscar(1)
+	bp.Buscar(randomOrigen)
 
-	fmt.Println("(Busqueda en profundidad) : Conteo para 1: ", bp.GetConteo())
+	fmt.Println("(Busqueda en profundidad) : Conteo para ", randomOrigen, ": ", bp.GetConteo())
 	fmt.Println("(Busqueda en profundidad) : Es conexo: ", bp.EsConexo())
 	fmt.Print("------------------\n")
 	ba := Anchura.New(mat)
-	ba.Buscar(1)
+	ba.Buscar(randomOrigen)
 	fmt.Println("(Busqueda en Anchura) : Es conexo: ", ba.EsConexo())
 
 }
