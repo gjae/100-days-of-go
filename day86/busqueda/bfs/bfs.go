@@ -35,9 +35,6 @@ func New(g *grafo.Grafo, origen int) *Bfs {
 
 	bfs.Buscar(origen, 1)
 
-	for v, c := range bfs.colores {
-		fmt.Printf("%d: C%d\n", v, c)
-	}
 	return bfs
 }
 
@@ -77,6 +74,7 @@ func (b *Bfs) Buscar(origen, color int) {
 		dictColores[color] = true
 	}
 
+	// Muestra en pantalla la cantidad de colores usados
 	fmt.Println(len(dictColores))
 }
 
