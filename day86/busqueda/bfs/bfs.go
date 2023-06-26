@@ -34,6 +34,9 @@ func New(g *grafo.Grafo, origen int) *Bfs {
 	}
 
 	bfs.Buscar(origen, 1)
+	for v, c := range bfs.colores {
+		fmt.Printf("%d: C%d\n", v, c)
+	}
 
 	return bfs
 }

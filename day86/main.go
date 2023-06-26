@@ -69,8 +69,8 @@ func main() {
 		}
 	}
 
-	mat.PrintGrafo()
 	origen := mat.VerticeConMayorGrado()
-	fmt.Printf("Origen: %d\n", origen)
+	mat.PrintGrafo()
+	fmt.Print("\nNúmero cromatico: ")
 	_ = busqueda.New(mat, origen)
 }
