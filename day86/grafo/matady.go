@@ -116,7 +116,7 @@ func (g *Grafo) VerticeConMayorGrado() int {
 	var numAdy int
 	for v, _ := range g.mat {
 		adys := len(g.AdyacentesDe(v))
-		if len(g.AdyacentesDe(v)) > numAdy {
+		if len(g.AdyacentesDe(v)) > numAdy || v == (g.GetTam()-1) {
 			vertMayGrado = v
 			numAdy = adys
 		}

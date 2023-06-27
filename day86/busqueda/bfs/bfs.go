@@ -34,20 +34,15 @@ func New(g *grafo.Grafo, origen int) *Bfs {
 	}
 
 	bfs.Buscar(origen, 1)
-	for v, c := range bfs.colores {
-		fmt.Printf("%d: C%d\n", v, c)
-	}
+	//for v, c := range bfs.colores {
+	//	fmt.Printf("%d: C%d\n", v, c)
+	//}
 
 	return bfs
 }
 
-func (b *Bfs) Contar() {
-	b.Conteo++
-}
-
 func (b *Bfs) Buscar(origen, color int) {
 	b.marcados[origen] = true
-	b.Contar()
 	b.Queue.PushBack(origen)
 	auxColor := color
 	dictColores := make(map[int]bool)
@@ -56,14 +51,19 @@ func (b *Bfs) Buscar(origen, color int) {
 
 	for el := b.Queue.Front(); el != nil; el = el.Next() {
 		v := el.Value.(int)
+		adyacentes := b.graf.AdyacentesDe(v)
 
-		// Se le asigna a lavariable "color" el "color" original
 		color = auxColor
-		for _, w := range b.graf.AdyacentesDe(v) {
+		// Se le asigna a lavariable "color" el "color" original
+		for k, w := range adyacentes {
 			// Si se encuentra un vertice con el color "color" entonces
 			// se ubica el siguiente color mas bajo
 			if b.colores[w] == color {
 				color++
+				if k > 0 && b.colores[adyacentes[k-1]] >= color {
+					color++
+				}
+				//fmt.Println("+Origen ", v, "Ady ", w, " Color ady", b.colores[w], "color actual ", color)
 			}
 
 			if !b.marcados[w] {

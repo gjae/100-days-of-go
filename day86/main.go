@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	busqueda "gjae/grafos/busqueda/bfs"
 	"gjae/grafos/grafo"
 	"log"
@@ -52,7 +51,9 @@ func main() {
 	var vertices []int
 
 	numVertices, _ := strconv.Atoi(scanner.Text())
-	mat := grafo.New(numVertices, false)
+	scanner.Scan()
+	dirigido, _ := strconv.Atoi(scanner.Text())
+	mat := grafo.New(numVertices, dirigido == 1)
 
 	for scanner.Scan() {
 		auxVert := strings.Split(scanner.Text(), " ")
@@ -70,7 +71,6 @@ func main() {
 	}
 
 	origen := mat.VerticeConMayorGrado()
-	mat.PrintGrafo()
-	fmt.Print("\nNúmero cromatico: ")
+	// mat.PrintGrafo()
 	_ = busqueda.New(mat, origen)
 }
