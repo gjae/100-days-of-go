@@ -1,4 +1,4 @@
-package main
+package lists
 
 import (
 	"log"
@@ -13,7 +13,7 @@ func TestAddTwoNumbers(t *testing.T) {
 	l2 := &ListNode{Val: 9, Next: &ListNode{Val: 9}}
 	var arrAssert []int
 	result := []int{8, 9, 1}
-	response := addTwoNumbers(l1, l2)
+	response := AddTwoNumbers(l1, l2)
 
 	for response != nil {
 		arrAssert = append(arrAssert, response.Val)
