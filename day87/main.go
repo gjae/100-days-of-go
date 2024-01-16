@@ -4,6 +4,7 @@ package main
 
 import (
 	"fmt"
+	"gjae/linkedlist1/hash_maps"
 	"gjae/linkedlist1/lists"
 )
 
@@ -17,5 +18,9 @@ func main() {
 		fmt.Println(l3.Val)
 		l3 = l3.Next
 	}
+
+	fmt.Println(hash_maps.RunTwoNums([]int{2, 7, 11, 15}, 9))
+	fmt.Println(hash_maps.RunTwoNums([]int{2, 4, 6, 7}, 8))
+	fmt.Println(hash_maps.RunTwoNums([]int{3, 2, 4}, 6))
 
 }
